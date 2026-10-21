@@ -32,13 +32,13 @@ STAR_COLORS = ["#fff6e2", "#fff6e2", "#fff6e2", "#ffe9c4", "#e4ecff", "#ffd9b0"]
 flyers = [dict(u=rng.uniform(0, LOOP), a=rng.uniform(0, 2 * math.pi),
                curl=rng.uniform(-0.35, 0.35), mag=rng.uniform(0.45, 1.0),
                color=rng.choice(STAR_COLORS))
-          for _ in range(42)]
+          for _ in range(20)]
 
 # Distant stars: too far away to move.
 fixed = [dict(x=rng.uniform(0, W), y=rng.uniform(0, H),
-              r=rng.choice([0.5, 0.6, 0.7, 0.9, 1.1]), o=rng.uniform(0.35, 0.95),
+              r=rng.choice([0.9, 1.1, 1.3, 1.6]), o=rng.uniform(0.55, 1.0),
               color=rng.choice(STAR_COLORS))
-         for _ in range(210)]
+         for _ in range(45)]
 
 
 def smooth(t):
@@ -73,8 +73,9 @@ def frame_svg(frame):
   <radialGradient id="vignette" cx="0.5" cy="0.5" r="0.72">
     <stop offset="0.55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.78"/>
   </radialGradient>
-  <filter id="soft" x="-2" y="-2" width="5" height="5"><feGaussianBlur stdDeviation="0.45"/></filter>
-  <filter id="halo" x="-3" y="-3" width="7" height="7"><feGaussianBlur stdDeviation="2.6"/></filter>
+  <radialGradient id="halo">
+    <stop offset="0" stop-color="#ff9466" stop-opacity="1"/><stop offset="1" stop-color="#ff9466" stop-opacity="0"/>
+  </radialGradient>
   <filter id="speck" x="-1" y="-1" width="3" height="3"><feGaussianBlur stdDeviation="0.5"/></filter>
   <filter id="grainLight" x="0" y="0" width="{W}" height="{H}" filterUnits="userSpaceOnUse">
     <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="{11 + frame * 7}" stitchTiles="stitch"/>
@@ -91,43 +92,38 @@ def frame_svg(frame):
 </defs>''')
     p.append(f'<rect width="{W}" height="{H}" fill="url(#sky)"/>')
     # uneven film exposure / faint dust in space
-    p.append(f'<rect width="{W}" height="{H}" filter="url(#mottle)" opacity="0.22"/>')
+    p.append(f'<rect width="{W}" height="{H}" filter="url(#mottle)" opacity="0.1"/>')
 
     p.append(f'<g transform="translate({wx:.1f} {wy:.1f})">')
     # distant stars
-    p.append('<g filter="url(#soft)">')
+    # Stars are plain circles with no blur filter: Scratch skips filtered shapes.
     for s in fixed:
         p.append(f'<circle cx="{s["x"]:.1f}" cy="{s["y"]:.1f}" r="{s["r"]}" fill="{s["color"]}" opacity="{s["o"]:.2f}"/>')
-    p.append('</g>')
 
     pts = flyer_points(frame)
     # halation: warm red glow around bright stars, the way film bleeds highlights
-    p.append('<g filter="url(#halo)">')
     for x, y, t, ang, r, s in pts:
-        b = smooth((t - 0.55) / 0.4) * s["mag"]
-        if b > 0.3:
-            p.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{1.2 + 2.6 * b:.1f}" fill="#ff9466" opacity="{0.3 * b:.2f}"/>')
-    p.append('</g>')
+        b = smooth((t - 0.62) / 0.3) * s["mag"]
+        if b > 0.25:
+            p.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{6 + 7 * b:.1f}" fill="url(#halo)" opacity="{0.4 * b:.2f}"/>')
     # motion streaks for near stars
     for x, y, t, ang, r, s in pts:
-        b = smooth((t - 0.72) / 0.28) * s["mag"]
+        b = smooth((t - 0.6) / 0.35) * s["mag"]
         if b > 0.2:
             back = r * (1 - 1 / STEP) * 0.35
             x0, y0 = x - back * math.cos(ang), y - back * math.sin(ang) * 0.92
             p.append(f'<line x1="{x0:.1f}" y1="{y0:.1f}" x2="{x:.1f}" y2="{y:.1f}" stroke="{s["color"]}" '
-                     f'stroke-width="{0.6 + 1.6 * b:.1f}" stroke-linecap="round" opacity="{0.28 * b:.2f}"/>')
+                     f'stroke-width="{1.2 + 2.6 * b:.1f}" stroke-linecap="round" opacity="{0.4 * b:.2f}"/>')
     # star cores
-    p.append('<g filter="url(#soft)">')
     for x, y, t, ang, r, s in pts:
-        o = smooth((t - 0.12) / 0.45) * (0.35 + 0.65 * s["mag"])
-        size = 0.5 + 1.9 * (t ** 2.2) * s["mag"]
+        o = smooth((t - 0.55) / 0.25) * (0.5 + 0.5 * s["mag"])
+        size = 1.0 + 3.2 * (t ** 1.8) * s["mag"]
         if o > 0.03:
             p.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{size:.2f}" fill="{s["color"]}" opacity="{min(o, 1):.2f}"/>')
     p.append('</g>')
-    p.append('</g>')
 
     # film grain
-    p.append(f'<rect width="{W}" height="{H}" filter="url(#grainDark)" opacity="0.35"/>')
+    p.append(f'<rect width="{W}" height="{H}" filter="url(#grainDark)" opacity="0.25"/>')
     p.append(f'<rect width="{W}" height="{H}" filter="url(#grainLight)" opacity="0.16"/>')
 
     # dust and hair on the print
