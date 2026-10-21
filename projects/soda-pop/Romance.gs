@@ -4,4 +4,5 @@ set_y -80;
 
 onflag {
     switch_costume "romance-1";
+    set_tempo 120;
 }

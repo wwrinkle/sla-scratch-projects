@@ -10,6 +10,7 @@ set_y 95;
 
 onflag {
     switch_costume "spock-01";
+    set_tempo 200;
     set_instrument 6;  # Bass
 
     forever {

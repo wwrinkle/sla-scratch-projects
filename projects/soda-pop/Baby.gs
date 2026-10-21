@@ -4,6 +4,7 @@ set_y -80;
 
 onflag {
     switch_costume "baby-1";
+    set_tempo 120;
     forever {
         rest 1;
         play_drum 8, 1;  # Hand Clap

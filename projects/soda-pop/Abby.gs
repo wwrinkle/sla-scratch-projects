@@ -4,6 +4,7 @@ set_y -80;
 
 onflag {
     switch_costume "abby-1";
+    set_tempo 120;
     forever {
         play_drum 2, 1;  # Bass Drum, quarter note
     }

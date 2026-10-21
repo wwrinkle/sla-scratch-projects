@@ -7,4 +7,5 @@ set_y 115;
 
 onflag {
     switch_costume "enterprise";
+    set_tempo 200;
 }
