@@ -4,4 +4,13 @@ set_y -80;
 
 onflag {
     switch_costume "mystery-1";
+    set_instrument 21;  # Synth Pad
+    forever {
+        play_note 36, 1;  # whole note: 1 beat on, 3 beats rest
+        rest 3;
+        play_note 43, 1;  # half note: 1 beat on, 1 beat rest
+        rest 1;
+        play_note 41, 1;  # half note: 1 beat on, 1 beat rest
+        rest 1;
+    }
 }

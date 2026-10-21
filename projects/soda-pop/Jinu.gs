@@ -10,10 +10,6 @@ onflag {
     switch_costume "jinu-1";
     switch_backdrop "sunburst";
     set_tempo 120;
-    set_instrument 2;  # Electric Piano
-
-    # TODO: replace the next line with the chorus melody, one note per line:
-    #     play_note <MIDI number>, <beats>;
-    # Use `rest <beats>;` for a rest.
-    say "Melody coming soon!";
+    set_instrument 20;  # Synth Lead
+    forever {}
 }
