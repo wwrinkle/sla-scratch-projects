@@ -22,7 +22,7 @@ a text language that compiles to Scratch. Each folder is one project:
 ```
 projects/zelda-overworld/
   stage.gs      backdrops
-  Hero.gs       a sprite (the file name is the sprite's name): costumes and scripts
+  Link.gs       a sprite (the file name is the sprite's name): costumes and scripts
   assets/       costume and backdrop images (SVG)
 ```
 
