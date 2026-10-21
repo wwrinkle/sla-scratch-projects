@@ -1,0 +1,2 @@
+# Sprite order, from back to front. Without this, goboscript sorts sprites alphabetically.
+layers = ["Kirk", "Spock", "Crew", "Enterprise"]

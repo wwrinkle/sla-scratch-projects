@@ -10,6 +10,7 @@ After goboscript builds a project, this script tidies it for students:
 - removes the goboscript logo and TurboWarp settings comments from the Stage
 - gives "play note" blocks the piano keyboard picker, like blocks dragged in by hand
 - sets each costume's centre to the middle of its image
+- lists the sprites in their layer order (set with `layers` in the project's goboscript.toml)
 """
 
 import json
@@ -68,6 +69,9 @@ def tidy(project, files):
             size = image_size(files[costume["md5ext"]], costume["dataFormat"])
             if size:
                 costume["rotationCenterX"], costume["rotationCenterY"] = size[0] / 2, size[1] / 2
+
+    # goboscript.toml's `layers` only sets drawing order; list the sprites in that order too.
+    project["targets"].sort(key=lambda t: t["layerOrder"])
 
 
 def build(project_dir):
