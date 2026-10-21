@@ -41,6 +41,9 @@ rest 1;              # rest for (1) beats
 
 Comments (`# …`) are for teachers. They don't appear in Scratch.
 
+The Star Trek star-field backdrops are generated: edit and run
+`python3 projects/star-trek-theme/make_stars.py` to change them, then rebuild.
+
 To build on your own computer, install goboscript from the commit pinned in
 `.github/workflows/build.yml`, then run `python3 build.py` (or `python3 build.py soda-pop`).
 

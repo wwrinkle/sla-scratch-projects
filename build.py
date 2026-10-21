@@ -15,6 +15,7 @@ After goboscript builds a project, this script tidies it for students:
 import json
 import os
 import re
+import struct
 import subprocess
 import sys
 import tempfile
@@ -27,7 +28,10 @@ GOBOSCRIPT = os.environ.get("GOBOSCRIPT", "goboscript")
 FIXED_TIME = (2020, 1, 1, 0, 0, 0)  # same bytes for the same project, so unchanged builds don't commit
 
 
-def svg_size(data):
+def image_size(data, data_format):
+    """Width and height of an SVG or PNG costume, or None."""
+    if data_format == "png":
+        return struct.unpack(">II", data[16:24])  # from the PNG's IHDR header
     head = data[:2000].decode("utf-8", "replace")
     w = re.search(r'\bwidth="([\d.]+)', head)
     h = re.search(r'\bheight="([\d.]+)', head)
@@ -59,9 +63,9 @@ def tidy(project, files):
                 block["inputs"]["NOTE"] = [1, shadow_id]
 
         for costume in target["costumes"]:
-            if "rotationCenterX" in costume or costume["dataFormat"] != "svg":
+            if "rotationCenterX" in costume or costume["dataFormat"] not in ("svg", "png"):
                 continue
-            size = svg_size(files[costume["md5ext"]])
+            size = image_size(files[costume["md5ext"]], costume["dataFormat"])
             if size:
                 costume["rotationCenterX"], costume["rotationCenterY"] = size[0] / 2, size[1] / 2
 
@@ -98,11 +102,14 @@ def write_thumbnail(name, project, files):
     import base64
 
     def image(costume, x, y):
+        fmt = costume["dataFormat"]
         data = base64.b64encode(files[costume["md5ext"]]).decode()
-        w, h = svg_size(files[costume["md5ext"]])
-        left, top = x - costume["rotationCenterX"], y - costume["rotationCenterY"]
-        return (f'<image x="{left:g}" y="{top:g}" width="{w:g}" height="{h:g}" '
-                f'href="data:image/svg+xml;base64,{data}"/>')
+        scale = costume.get("bitmapResolution", 1)  # bitmap pixels per stage pixel
+        w, h = image_size(files[costume["md5ext"]], fmt)
+        left, top = x - costume["rotationCenterX"] / scale, y - costume["rotationCenterY"] / scale
+        mime = "image/png" if fmt == "png" else "image/svg+xml"
+        return (f'<image x="{left:g}" y="{top:g}" width="{w / scale:g}" height="{h / scale:g}" '
+                f'href="data:{mime};base64,{data}"/>')
 
     parts = []
     for target in sorted(project["targets"], key=lambda t: t["layerOrder"]):
