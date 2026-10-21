@@ -4,4 +4,5 @@ set_y 60;
 
 onflag {
     switch_costume "triforce-1";
+    set_tempo 150;
 }

@@ -13,6 +13,6 @@ onflag {
     switch_costume "link-1";
     switch_backdrop "field";
     set_tempo 150;
-    set_instrument 20;  # Synth Lead
-    # Melody here
+    set_instrument 9;  # Trombone
+    forever {}
 }
