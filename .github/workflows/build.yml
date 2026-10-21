@@ -1,0 +1,52 @@
+# Rebuilds the .sb3 files and thumbnails when a goboscript project changes,
+# and commits them so GitHub Pages serves the new versions.
+name: Build Scratch projects
+
+on:
+  push:
+    branches: [main]
+    paths: ["projects/**", "build.py", ".github/workflows/build.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build
+  cancel-in-progress: false
+
+env:
+  # goboscript's Music blocks aren't in a release yet, so build it from this commit.
+  GOBOSCRIPT_REV: 0c48a89dfa4cf88f3d5f9a72350aa0fb68ecef72
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache goboscript
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: ~/goboscript
+          key: goboscript-${{ env.GOBOSCRIPT_REV }}
+
+      - name: Install goboscript
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: cargo install --locked --git https://github.com/aspizu/goboscript --rev "$GOBOSCRIPT_REV" --root ~/goboscript
+
+      - name: Build projects
+        run: GOBOSCRIPT=~/goboscript/bin/goboscript python3 build.py
+
+      - name: Commit changes
+        run: |
+          git add -A -- '*.sb3' thumbs
+          if git diff --cached --quiet; then
+            echo "Nothing changed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Build Scratch projects"
+          git push

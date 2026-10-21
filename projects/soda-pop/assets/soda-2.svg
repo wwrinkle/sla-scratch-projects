@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="180" viewBox="0 0 120 180">
+  <ellipse cx="60" cy="174" rx="40" ry="5" fill="#000000" opacity="0.2"/>
+  <g fill="#ffffff" stroke="#19c3c9" stroke-width="2">
+    <circle cx="38" cy="10" r="6"/><circle cx="60" cy="5" r="4"/><circle cx="82" cy="12" r="7"/><circle cx="52" cy="22" r="3"/>
+  </g>
+  <rect x="20" y="36" width="80" height="134" rx="16" fill="#19c3c9" stroke="#0b6d73" stroke-width="4"/>
+  <rect x="20" y="114" width="80" height="26" fill="#ff4fb8"/>
+  <text x="60" y="134" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="bold" fill="#ffffff" text-anchor="middle">POP!</text>
+  <ellipse cx="60" cy="36" rx="38" ry="10" fill="#d9dee3" stroke="#8a939b" stroke-width="4"/>
+  <path d="M38 76 L48 70 L38 64" fill="none" stroke="#1b0838" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M82 76 L72 70 L82 64" fill="none" stroke="#1b0838" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M44 86 Q60 108 76 86 Z" fill="#1b0838"/>
+  <circle cx="34" cy="90" r="5" fill="#ff8fcf" opacity="0.8"/><circle cx="86" cy="90" r="5" fill="#ff8fcf" opacity="0.8"/>
+  <rect x="28" y="48" width="8" height="50" rx="4" fill="#ffffff" opacity="0.35"/>
+</svg>
