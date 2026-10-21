@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="360" viewBox="0 0 480 360">
+  <rect x="0" y="0" width="120" height="120" fill="#b49cf5"/>
+  <polygon points="0,0 120,0 120,120" fill="#ffa6dc"/>
+  <rect x="120" y="0" width="120" height="120" fill="#ffa6dc"/>
+  <polygon points="120,0 240,0 120,120" fill="#8fe9f4"/>
+  <rect x="240" y="0" width="120" height="120" fill="#8fe9f4"/>
+  <polygon points="240,0 360,0 360,120" fill="#b49cf5"/>
+  <rect x="360" y="0" width="120" height="120" fill="#b49cf5"/>
+  <polygon points="360,0 480,0 360,120" fill="#ffa6dc"/>
+  <rect x="0" y="120" width="120" height="120" fill="#ffa6dc"/>
+  <polygon points="0,120 120,120 0,240" fill="#8fe9f4"/>
+  <rect x="120" y="120" width="120" height="120" fill="#8fe9f4"/>
+  <polygon points="120,120 240,120 240,240" fill="#b49cf5"/>
+  <rect x="240" y="120" width="120" height="120" fill="#b49cf5"/>
+  <polygon points="240,120 360,120 240,240" fill="#ffa6dc"/>
+  <rect x="360" y="120" width="120" height="120" fill="#ffa6dc"/>
+  <polygon points="360,120 480,120 480,240" fill="#8fe9f4"/>
+  <rect x="0" y="240" width="120" height="120" fill="#8fe9f4"/>
+  <polygon points="0,240 120,240 120,360" fill="#b49cf5"/>
+  <rect x="120" y="240" width="120" height="120" fill="#b49cf5"/>
+  <polygon points="120,240 240,240 120,360" fill="#ffa6dc"/>
+  <rect x="240" y="240" width="120" height="120" fill="#ffa6dc"/>
+  <polygon points="240,240 360,240 360,360" fill="#8fe9f4"/>
+  <rect x="360" y="240" width="120" height="120" fill="#8fe9f4"/>
+  <polygon points="360,240 480,240 360,360" fill="#b49cf5"/>
+</svg>
