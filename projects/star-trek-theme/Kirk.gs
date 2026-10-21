@@ -14,4 +14,7 @@ set_y -90;
 
 onflag {
     switch_costume "kirk-01";
+    set_tempo 200;
+    set_instrument 20;  # Synth Lead
+    forever {}
 }

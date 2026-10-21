@@ -10,4 +10,28 @@ set_y 95;
 
 onflag {
     switch_costume "spock-01";
+    set_instrument 6;  # Bass
+
+    forever {
+        # Bars 1–2
+        repeat 4 {
+            play_note 48, 1;  # C3
+            play_note 43, 1;  # G2
+        }
+        # Bars 3–4
+        repeat 4 {
+            play_note 44, 1;  # A♭2
+            play_note 39, 1;  # E♭2
+        }
+        # Bars 5–6
+        repeat 4 {
+            play_note 48, 1;  # C3
+            play_note 43, 1;  # G2
+        }
+        # Bars 7–8
+        repeat 4 {
+            play_note 41, 1;  # F2
+            play_note 36, 1;  # C2
+        }
+    }
 }

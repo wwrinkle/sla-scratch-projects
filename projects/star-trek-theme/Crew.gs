@@ -9,4 +9,8 @@ set_y -95;
 
 onflag {
     switch_costume "crew-01";
+    forever {
+        rest 0.5;
+        play_drum 1, 0.5;  # Snare Drum
+    }
 }
