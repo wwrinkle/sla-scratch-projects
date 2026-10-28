@@ -25,19 +25,16 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - name: Cache goboscript
-        id: cache
-        uses: actions/cache@v6
-        with:
-          path: ~/goboscript
-          key: goboscript-${{ env.GOBOSCRIPT_REV }}
-
+      # Same install teachers use: downloads goboscript from this repo's Releases (published
+      # by goboscript-release.yml), or compiles it if that commit has no release yet.
       - name: Install goboscript
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: cargo install --locked --git https://github.com/aspizu/goboscript --rev "$GOBOSCRIPT_REV" --root ~/goboscript
+        run: |
+          ./install.sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
 
       - name: Build projects
-        run: GOBOSCRIPT=~/goboscript/bin/goboscript python3 build.py
+        run: python3 build.py
 
       - name: Commit changes
         run: |

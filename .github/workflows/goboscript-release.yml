@@ -33,7 +33,7 @@ jobs:
             echo "exists=true" >> "$GITHUB_OUTPUT"
           fi
 
-      # Same cache as build.yml, so this usually doesn't need to compile.
+      # Saves a rerun from compiling again.
       - name: Cache goboscript
         if: steps.rev.outputs.exists != 'true'
         id: cache
