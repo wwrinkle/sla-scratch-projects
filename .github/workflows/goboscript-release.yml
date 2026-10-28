@@ -1,0 +1,59 @@
+# Publishes a ready-to-run goboscript as a GitHub Release, so install.sh can download it
+# instead of compiling it (no Rust, compiler or sudo needed).
+# Runs when the pinned commit (GOBOSCRIPT_REV in build.yml) changes. Skips if that
+# commit already has a release.
+name: Release goboscript
+
+on:
+  push:
+    branches: [main]
+    paths: [".github/workflows/build.yml", ".github/workflows/goboscript-release.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Read the pinned commit
+        id: rev
+        run: |
+          rev="$(sed -n 's/^ *GOBOSCRIPT_REV: *//p' .github/workflows/build.yml)"
+          tag="goboscript-${rev:0:7}"
+          echo "rev=$rev" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "Release $tag already exists."
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Same cache as build.yml, so this usually doesn't need to compile.
+      - name: Cache goboscript
+        if: steps.rev.outputs.exists != 'true'
+        id: cache
+        uses: actions/cache@v6
+        with:
+          path: ~/goboscript
+          key: goboscript-${{ steps.rev.outputs.rev }}
+
+      - name: Compile goboscript
+        if: steps.rev.outputs.exists != 'true' && steps.cache.outputs.cache-hit != 'true'
+        run: cargo install --locked --git https://github.com/aspizu/goboscript --rev "${{ steps.rev.outputs.rev }}" --root ~/goboscript
+
+      - name: Publish the release
+        if: steps.rev.outputs.exists != 'true'
+        run: |
+          mkdir dist
+          cp ~/goboscript/bin/goboscript dist/goboscript-linux-x86_64
+          cd dist
+          sha256sum goboscript-linux-x86_64 > goboscript-linux-x86_64.sha256
+          gh release create "${{ steps.rev.outputs.tag }}" \
+            goboscript-linux-x86_64 goboscript-linux-x86_64.sha256 \
+            --title "goboscript ${{ steps.rev.outputs.rev }}" \
+            --notes "goboscript built from aspizu/goboscript@${{ steps.rev.outputs.rev }}. Downloaded by install.sh."

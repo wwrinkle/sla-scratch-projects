@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Draw the costumes and backdrops for the two rhythm game starters (drum-game, melody-game).
 
-    pip install fonttools
+    pip install -r requirements.txt
     python3 projects/rhythm_game_assets.py
 
 Writes SVGs into projects/drum-game/assets/ and projects/melody-game/assets/.

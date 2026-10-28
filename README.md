@@ -60,13 +60,18 @@ left_arrow = "left arrow for %s beats"
 
 `drum-game` and `melody-game` share their game code in `projects/rhythm-engine/` (see its
 README). Students only edit the **Song** sprite. Their costumes and backdrops are drawn by
-`projects/rhythm_game_assets.py` (needs `pip install fonttools` and the Bungee font).
+`projects/rhythm_game_assets.py` (needs `pip install -r requirements.txt` and the Bungee font).
 
 The Star Trek star-field backdrops are generated: edit and run
 `python3 projects/star-trek-theme/make_stars.py` to change them, then rebuild.
 
-To build on your own computer, install goboscript from the commit pinned in
-`.github/workflows/build.yml`, then run `python3 build.py` (or `python3 build.py soda-pop`).
+To build on your own computer, run `./install.sh` once, then `python3 build.py` (or
+`python3 build.py soda-pop`). On Linux it downloads a ready-made goboscript into `~/.local/bin`,
+with no sudo needed. On other systems, or with `./install.sh --from-source`, it compiles goboscript
+with Rust instead, which needs (on Ubuntu) `sudo apt install build-essential pkg-config libssl-dev`.
+
+The ready-made goboscript comes from this repo's Releases. The **Release goboscript** Action
+publishes a new one whenever `GOBOSCRIPT_REV` in `.github/workflows/build.yml` changes.
 
 ## Adding a project made in Scratch
 
