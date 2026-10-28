@@ -77,7 +77,8 @@ def tidy(project, files, labels={}, project_name=""):
                 continue
             note = block["inputs"].get("NOTE")
             # A typed number looks like [1, [4, 60]]; swap it for a "note" shadow block.
-            if note and isinstance(note[1], list):
+            # Leave anything else alone, e.g. a variable: [3, [12, "note", id], ...].
+            if note and note[0] == 1 and isinstance(note[1], list) and note[1][0] == 4:
                 shadow_id = block_id + "-note"
                 blocks[shadow_id] = {
                     "opcode": "note",
