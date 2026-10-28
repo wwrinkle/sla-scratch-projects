@@ -42,8 +42,7 @@ onclone {
     switch_costume lane;
     set_x -75 + (lane - 1) * 85;
     set_y START_Y;
-    goto_front;
-    show;
+    show;  # clones start just behind the original, so they stay behind the Pads
     judged = 0;
     forever {
         set_y TARGET_Y + (arrive - timer()) * (START_Y - TARGET_Y) / fall_time;

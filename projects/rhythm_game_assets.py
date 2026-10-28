@@ -69,13 +69,19 @@ def arrow_costume(colour, angle, fill_opacity=1):
                f'stroke-linecap="round" fill="none"/></g>')
 
 
-def pad_costume(colour, angle):
-    """The glow shown on a target while its key is held down."""
-    return svg(96, 96,
-               f'<circle cx="48" cy="48" r="44" fill="{colour}" fill-opacity="0.35"/>'
-               f'<g transform="translate(12 12) rotate({angle} 36 36)">'
-               f'<path d="{ARROW}" fill="#FFFFFF" stroke="{colour}" stroke-width="5" '
-               f'stroke-linejoin="round"/></g>')
+def pad_costume(colour, angle, lit):
+    """A target: a tall tap zone (big enough for fingers on an iPad) with the arrow in the
+    middle. Everything is see-through so the falling arrows show behind it."""
+    if lit:
+        zone = f'fill="{colour}" fill-opacity="0.45" stroke="#FFFFFF" stroke-width="3"'
+        arrow = f'fill="#FFFFFF" stroke="{colour}" stroke-width="5"'
+    else:
+        zone = f'fill="{colour}" fill-opacity="0.12" stroke="{colour}" stroke-opacity="0.6" stroke-width="2"'
+        arrow = f'fill="#FFFFFF" fill-opacity="0.05" stroke="{colour}" stroke-width="5"'
+    return svg(82, 124,
+               f'<rect x="2" y="2" width="78" height="120" rx="14" {zone}/>'
+               f'<g transform="translate(5 26) rotate({angle} 36 36)">'
+               f'<path d="{ARROW}" {arrow} stroke-linejoin="round"/></g>')
 
 
 def judge_costume(word, colour):
@@ -139,7 +145,8 @@ def main():
         write(project, "song.svg", icon)
         for name, colour, angle, _ in LANES:
             write(project, f"arrow-{name}.svg", arrow_costume(colour, angle))
-            write(project, f"pad-{name}.svg", pad_costume(colour, angle))
+            write(project, f"pad-{name}.svg", pad_costume(colour, angle, lit=False))
+            write(project, f"pad-{name}-lit.svg", pad_costume(colour, angle, lit=True))
         write(project, "perfect.svg", judge_costume("PERFECT!", "#FFC93C"))
         write(project, "good.svg", judge_costume("GOOD", "#00B4A6"))
         write(project, "miss.svg", judge_costume("MISS", "#FF4FA3"))
