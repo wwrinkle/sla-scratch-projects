@@ -3,8 +3,12 @@
 Scratch projects (`.sb3`) for Sonic Logic Academy lessons, served by GitHub Pages so the
 [SLA Scratch editor](https://scratch.soniclogicacademy.com/) can open them from a link.
 
-The [home page](https://wwrinkle.github.io/sla-scratch-projects/) (`index.html`) is the
-**Pick Your Song** page: three starter projects for the music video lesson.
+Pages that open the starters:
+
+- [Pick Your Song](https://wwrinkle.github.io/sla-scratch-projects/) (`index.html`): three
+  starters for the music video lesson.
+- [Pick Your Game](https://wwrinkle.github.io/sla-scratch-projects/music-game/)
+  (`music-game/index.html`): the Drum Game and Melody Game rhythm game starters.
 
 ## Linking to a project
 
@@ -40,6 +44,23 @@ rest 1;              # rest for (1) beats
 ```
 
 Comments (`# …`) are for teachers. They don't appear in Scratch.
+
+### Custom block labels
+
+goboscript names can't have spaces, so a custom block shows up in Scratch as
+`left_arrow beats: (1)`. To label it the way students should read it, add a `[labels]` table
+to the project's `goboscript.toml`, with one `%s` for each input:
+
+```toml
+[labels]
+left_arrow = "left arrow for %s beats"
+```
+
+### Rhythm games
+
+`drum-game` and `melody-game` share their game code in `projects/rhythm-engine/` (see its
+README). Students only edit the **Song** sprite. Their costumes and backdrops are drawn by
+`projects/rhythm_game_assets.py` (needs `pip install fonttools` and the Bungee font).
 
 The Star Trek star-field backdrops are generated: edit and run
 `python3 projects/star-trek-theme/make_stars.py` to change them, then rebuild.

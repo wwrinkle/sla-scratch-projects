@@ -1,0 +1,15 @@
+# Sprite order, from back to front. Without this, goboscript sorts sprites alphabetically.
+layers = ["Song", "Pads", "Arrow", "Judge"]
+
+# How build.py labels the custom blocks in Scratch (goboscript names can't have spaces).
+# Each %s is one input, in the order of the proc's arguments.
+[labels]
+left_arrow = "left arrow note %s for %s beats"
+down_arrow = "down arrow note %s for %s beats"
+up_arrow = "up arrow note %s for %s beats"
+right_arrow = "right arrow note %s for %s beats"
+send_arrow = "send arrow lane %s note %s for %s beats"
+play_hit_sound = "play hit sound"
+set_up_sound = "set up sound"
+press = "press lane %s"
+watch_key = "watch key"

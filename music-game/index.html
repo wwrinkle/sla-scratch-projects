@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pick Your Game · Sonic Logic Academy</title>
+<style>
+  :root {
+    --primary: #2D1B69;
+    --secondary: #5B3FB5;
+    --accent: #00B4A6;
+    --ink: #2C2C2C;
+    --muted: #666666;
+    --tint: #EDE9FF;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Arial, "Liberation Sans", Helvetica, sans-serif;
+    color: var(--ink);
+    background: var(--tint);
+  }
+  header {
+    background: var(--primary);
+    color: #fff;
+    padding: 28px 16px 32px;
+    text-align: center;
+  }
+  .kicker { margin: 0 0 6px; color: var(--accent); font-weight: bold; letter-spacing: 0.12em; font-size: 14px; }
+  h1 { margin: 0; font-size: clamp(32px, 6vw, 52px); }
+  header p.lead { margin: 10px 0 0; font-size: 18px; color: #d9d0ff; }
+  main {
+    margin: 0 auto;
+    padding: 28px 16px 48px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    max-width: 900px;
+    gap: 24px;
+  }
+  a.card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 4px 14px rgba(45, 27, 105, 0.15);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  a.card:hover, a.card:focus-visible { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(45, 27, 105, 0.25); }
+  a.card:focus-visible { outline: 4px solid var(--accent); outline-offset: 2px; }
+  .card img { display: block; width: 100%; aspect-ratio: 4 / 3; }
+  .level { margin: 0 0 18px; font-size: 16px; }
+  .level b { color: var(--primary); }
+  .card .body { padding: 18px 20px 22px; display: flex; flex-direction: column; flex: 1; }
+  .from { margin: 0; color: var(--secondary); font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 0.06em; }
+  h2 { margin: 4px 0 8px; font-size: 26px; color: var(--primary); }
+  .hook { margin: 0 0 18px; color: var(--muted); font-size: 17px; flex: 1; }
+  .button {
+    align-self: flex-start;
+    background: var(--accent);
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 12px 20px;
+    border-radius: 999px;
+  }
+  footer { text-align: center; color: var(--muted); font-size: 14px; padding: 0 16px 32px; }
+</style>
+</head>
+<body>
+<header>
+  <p class="kicker">SONIC LOGIC ACADEMY</p>
+  <h1>Pick Your Game</h1>
+  <p class="lead">Choose one starter, then turn a song into arrows.</p>
+</header>
+
+<main>
+  <a class="card" href="https://scratch.soniclogicacademy.com/?project_url=https://wwrinkle.github.io/sla-scratch-projects/drum-game.sb3">
+    <img src="../thumbs/drum-game.svg" alt="Four arrow lanes with a drum beside them and the word PERFECT!">
+    <div class="body">
+      <p class="from">Level 1</p>
+      <h2>Drum Game</h2>
+      <p class="hook">Every arrow plays a drum. Make a beat, then try to play it.</p>
+      <p class="level">You choose: <b>arrow</b> + <b>beats</b></p>
+      <span class="button">Open in Scratch →</span>
+    </div>
+  </a>
+
+  <a class="card" href="https://scratch.soniclogicacademy.com/?project_url=https://wwrinkle.github.io/sla-scratch-projects/melody-game.sb3">
+    <img src="../thumbs/melody-game.svg" alt="Four arrow lanes with a piano keyboard beside them and the word PERFECT!">
+    <div class="body">
+      <p class="from">Level 2</p>
+      <h2>Melody Game</h2>
+      <p class="hook">Every arrow plays a note. Turn a song sheet into a level.</p>
+      <p class="level">You choose: <b>arrow</b> + <b>note</b> + <b>beats</b></p>
+      <span class="button">Open in Scratch →</span>
+    </div>
+  </a>
+</main>
+
+<footer>soniclogicacademy.com</footer>
+</body>
+</html>

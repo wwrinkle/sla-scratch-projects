@@ -11,6 +11,8 @@ After goboscript builds a project, this script tidies it for students:
 - gives "play note" blocks the piano keyboard picker, like blocks dragged in by hand
 - sets each costume's centre to the middle of its image
 - lists the sprites in their layer order (set with `layers` in the project's goboscript.toml)
+- labels custom blocks from the [labels] table in goboscript.toml, so `left_arrow` can read
+  "left arrow for (1) beats" in Scratch (goboscript names can't have spaces)
 """
 
 import json
@@ -20,6 +22,7 @@ import struct
 import subprocess
 import sys
 import tempfile
+import tomllib
 import zipfile
 from pathlib import Path
 
@@ -39,14 +42,38 @@ def image_size(data, data_format):
     return (float(w.group(1)), float(h.group(1))) if w and h else None
 
 
-def tidy(project, files):
+def block_labels(project_dir):
+    """The [labels] table from goboscript.toml: proc name -> Scratch label, with %s per input."""
+    config = project_dir / "goboscript.toml"
+    if not config.exists():
+        return {}
+    return tomllib.loads(config.read_text()).get("labels", {})
+
+
+def relabel(block, labels, project_name):
+    mutation = block.get("mutation")
+    if not mutation or "proccode" not in mutation:
+        return
+    name, _, args = mutation["proccode"].partition(" ")
+    if name not in labels:
+        return
+    label = labels[name]
+    if label.count("%s") != args.count("%s"):
+        sys.exit(f"{project_name}: label for {name} needs {args.count('%s')} %s, not {label.count('%s')}")
+    mutation["proccode"] = label
+
+
+def tidy(project, files, labels={}, project_name=""):
     for target in project["targets"]:
         if target["isStage"]:
             target["comments"] = {}
 
         blocks = target["blocks"]
         for block_id, block in list(blocks.items()):
-            if not isinstance(block, dict) or block.get("opcode") != "music_playNoteForBeats":
+            if not isinstance(block, dict):
+                continue
+            relabel(block, labels, project_name)
+            if block.get("opcode") != "music_playNoteForBeats":
                 continue
             note = block["inputs"].get("NOTE")
             # A typed number looks like [1, [4, 60]]; swap it for a "note" shadow block.
@@ -89,7 +116,7 @@ def build(project_dir):
             files = {name: z.read(name) for name in z.namelist()}
 
     project = json.loads(files["project.json"])
-    tidy(project, files)
+    tidy(project, files, block_labels(project_dir), project_dir.name)
     files["project.json"] = json.dumps(project, ensure_ascii=False, separators=(",", ":")).encode()
 
     with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:
