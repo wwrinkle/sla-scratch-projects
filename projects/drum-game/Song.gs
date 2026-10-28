@@ -8,7 +8,10 @@ set_x -182;
 set_y -95;
 
 onflag {
-    set_tempo 100;
+    # Easter egg for fast finishers: wrap the song in a forever loop, keep "set tempo to (tempo)"
+    # inside it, and add "change [tempo] by (10)" at the end, so every round is faster.
+    tempo = 100;
+    set_tempo tempo;
     repeat 2 {
         left_arrow 1;
         up_arrow 1;
