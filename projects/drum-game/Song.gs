@@ -1,6 +1,6 @@
 # The students' sprite. Each arrow block sends one arrow down its lane, then waits that
 # many beats before the next block. The arrows play drums when you hit them:
-# left Bass Drum, down Snare, up Closed Hi-Hat, right Hand Clap.
+# left Snare, down Bass Drum, up Side Stick, right Open Hi-Hat (set in Arrow.gs).
 # The blocks are defined at the bottom; students only change the green flag script.
 
 costumes "assets/song.svg";
