@@ -8,21 +8,16 @@ set_x -182;
 set_y -95;
 
 onflag {
-    # Easter egg for fast finishers: leave "set tempo to (100)" at the top, wrap the arrows in a
+    # Easter egg for fast finishers: leave "set tempo to (70)" at the top, wrap the arrows in a
     # forever loop, and add the Music block "change tempo by (10)" at the end of the loop,
     # so every round is faster.
-    set_tempo 100;
+    set_tempo 70;
     repeat 2 {
         left_arrow 1;
         up_arrow 1;
         down_arrow 1;
-        up_arrow 1;
+        right_arrow 1;
     }
-    left_arrow 1;
-    left_arrow 1;
-    down_arrow 0.5;
-    down_arrow 0.5;
-    right_arrow 1;
 }
 
 nowarp proc left_arrow beats { send_arrow 1, $beats; }

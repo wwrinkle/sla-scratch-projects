@@ -4,12 +4,9 @@
 # TARGET_Y: the target line (keep in step with rhythm_game_assets.py)
 # START_Y: arrows appear at the top edge
 # LEAD_BEATS: an arrow falls for this many beats before it reaches the line
-# PERFECT, GOOD: how many seconds early or late still count as PERFECT or GOOD
 %define TARGET_Y -125
 %define START_Y 180
 %define LEAD_BEATS 3
-%define PERFECT 0.07
-%define GOOD 0.15
 
 costumes "assets/arrow-left.svg", "assets/arrow-down.svg", "assets/arrow-up.svg", "assets/arrow-right.svg";
 set_x -75;
@@ -21,6 +18,9 @@ onflag {
     hide;
     is_clone = 0;
     set_up_sound;
+    # PERFECT, GOOD: how many seconds early or late still count as PERFECT or GOOD
+    GOOD = 0.25;
+    PERFECT = GOOD / 3;
 }
 
 # The Song sprite broadcasts "arrow" for every note. Only the original makes a clone;

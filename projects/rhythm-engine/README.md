@@ -15,8 +15,9 @@ How a game runs:
    writes the time into `press_time` for that lane. Holding a key or finger down only counts
    once. The Pads are drawn in front of the arrows so a tap never lands on an arrow instead.
 4. Each Arrow clone compares the latest press in its lane with `arrive`:
-   within 0.07 s is PERFECT (100 points), within 0.15 s is GOOD (50), and later than that
-   with no press is a MISS (the combo resets). A hit plays the clone's sound
+   within 0.25 s is GOOD (50 points), and within a third of that (about 0.08 s) is PERFECT
+   (100). Later than that with no press is a MISS (the combo resets). The windows are set
+   by `GOOD` and `PERFECT` at the top of `arrow.gs`. A hit plays the clone's sound
    (`play hit sound`, defined in each starter's `Arrow.gs`).
 5. **Judge** pops up the PERFECT / GOOD / MISS word.
 

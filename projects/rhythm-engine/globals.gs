@@ -15,7 +15,7 @@ onflag {
     score = 0;
     combo = 0;
     show score;
-    show combo;
+    # show combo;
     delete press_time;
     repeat 4 {
         add -100 to press_time;
