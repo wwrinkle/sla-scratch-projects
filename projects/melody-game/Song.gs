@@ -14,18 +14,20 @@ onflag {
     # so every round is faster.
     set_tempo 100;
     # Frere Jacques
-    repeat 2 {
-        left_arrow 60, 1;   # C
-        up_arrow 62, 1;     # D
-        up_arrow 64, 1;     # E
-        down_arrow 60, 1;   # C
-    }
-    up_arrow 64, 1;         # E
-    up_arrow 65, 1;         # F
-    up_arrow 67, 2;         # G
-    down_arrow 64, 1;       # E
-    up_arrow 65, 1;         # F
-    up_arrow 67, 2;         # G
+    left_arrow 60, 1;   # C
+    up_arrow 62, 1;     # D
+    up_arrow 64, 1;     # E
+    down_arrow 60, 1;   # C
+    right_arrow 60, 1;  # C (same note again)
+    up_arrow 62, 1;     # D
+    up_arrow 64, 1;     # E
+    down_arrow 60, 1;   # C
+    up_arrow 64, 1;     # E
+    up_arrow 65, 1;     # F
+    up_arrow 67, 2;     # G
+    down_arrow 64, 1;   # E
+    up_arrow 65, 1;     # F
+    up_arrow 67, 2;     # G
 }
 
 nowarp proc left_arrow note, beats { send_arrow 1, $note, $beats; }

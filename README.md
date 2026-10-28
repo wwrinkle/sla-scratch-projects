@@ -56,6 +56,9 @@ to the project's `goboscript.toml`, with one `%s` for each input:
 left_arrow = "left arrow for %s beats"
 ```
 
+goboscript leaves out custom blocks that nothing calls, so a starter only gets the blocks its
+scripts use. For students to see a block (like `right_arrow`), use it somewhere in the song.
+
 ### Rhythm games
 
 `drum-game` and `melody-game` share their game code in `projects/rhythm-engine/` (see its
